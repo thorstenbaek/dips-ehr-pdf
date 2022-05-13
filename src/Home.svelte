@@ -1,10 +1,10 @@
 <script>
     import { onMount } from "svelte";  
-    import { resource } from './SmartOnFhirStore.js';
+    import { fhir, resource } from './SmartOnFhirStore.js';        
 </script>
 
 {#if $resource}
-    <iframe class="pdf-frame" title="PDF" src="{$resource.content[0].attachment.url}#toolbar=0"></iframe>
+    <iframe class="pdf-frame" title="PDF" src="{$resource.content[3].attachment.url}#toolbar=0"></iframe>
 {:else}
     Loading PDF Document...
 {/if}

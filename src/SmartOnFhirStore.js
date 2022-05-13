@@ -35,27 +35,31 @@ export const resource = derived(
     fhir, 
     ($fhir, set) => {
         if ($fhir != null && $fhir.client != null)
-        {
-            var resourceId = $fhir.client.getState("tokenResponse.resource");
-            $fhir.client.request(resourceId).then(
-                resource => {
-                    console.log(resource);
-                    set(resource);
-                });                       
+        {            
+            var resourceId = $fhir.client.getState("tokenResponse.resource");            
+            if (resourceId) {
+                $fhir.client.request(resourceId).then(
+                    resource => {
+                        console.log(resource);
+                        set(resource);
+                    });          
+            }             
         }
     }
 )
 
 Smart.ready()
     .then(client => {
+        console.log(client);
         var newContext = {
             client: client,
             error: null
-        };
+        };        
         fhir.set(newContext)})
     .catch(error => {
+        console.error(error);
         var newContext = {
             client: null,
             error: error
-        };
+        };        
         fhir.set(newContext)});
