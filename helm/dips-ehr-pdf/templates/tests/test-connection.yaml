@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "dips-ehr-pdf.fullname" . }}-test-connection"
+  namespace: {{ .Release.Name }}
+  labels:
+    {{- include "dips-ehr-pdf.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "dips-ehr-pdf.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
